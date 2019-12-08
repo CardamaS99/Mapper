@@ -53,3 +53,9 @@ Some of the benefits that the Mapper can provide to a software project are:
 2. __Increase of the security__, as the mapper with take care of preventing common security flaws in software such as SQL injection.
 3. __Ease of executing SQL sentences__, due to the abstraction that the mapper provides over the connection with the database.
 4. The possibility of __using non-atomic classes as foreign keys__ (namely, using a Java class as a foreign key instead of a single attribute); in addition, the mapper is able to extract from the database all the information about the referenced class as an object, not only its __primary key__, but also its other data regardless of its type, providing the user with the appropiate abstraction.
+
+## Authors
+
+* [Álvaro Goldar Dieste](//github.com/alvrogd)
+* [Francisco Javier Cardama Santiago](//github.com/CardamaS99)
+* [Saúl Gay Barral](//github.com/luastan)
