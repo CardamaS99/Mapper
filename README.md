@@ -19,11 +19,11 @@ The library provides the user with an interface which relies on the usage of the
 Via these annotations, the library is able to __parse basic SQL tables__ along with their properties, such as primary keys, or default values. Following up, an example shows a Java class _Alumno_ which maps the _Alumnos_ table.
 
 ```
-@MapperTable(nombre="alumnos")
-public class Alumno {
+@MapperTable(nombre="students")
+public class Student {
 
     @MapperColumn(columna="name")
-    private String nombre;
+    private String name;
     
     @MapperColumn(pkey=true)
     private String dni;
@@ -31,8 +31,8 @@ public class Alumno {
     @MapperColumn
     private Date birthday;
     
-    @MapperColumn(fkey="profesor:id")
-    private Profesor profesor;
+    @MapperColumn(fkey="teacher:id")
+    private Profesor teacher;
 }
 ```
 
