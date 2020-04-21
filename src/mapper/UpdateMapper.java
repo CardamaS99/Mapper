@@ -50,7 +50,7 @@ public class UpdateMapper<T> extends Mapper<T> {
     }
 
     /**
-     * Adds an object to de update pool. It toes not get updated on the
+     * Adds an object to de update pool. It does not get updated on the
      * database until method {@link UpdateMapper#update(boolean)} gets called.
      *
      * @param object Object to be updated
@@ -166,7 +166,7 @@ public class UpdateMapper<T> extends Mapper<T> {
             try {
                 statement = connection.prepareStatement(updateBuilder.toString());
 
-                // Loops over all the columns to be inserted while obtaining the vlaue from reflection
+                // Loops over all the columns to be inserted while obtaining the value from reflection
                 for (int i = 0; i < this.columnNames.size(); i++) {
                     statement.setObject(i + 1, this.attributes.get(this.columnNames.get(i)).get(objectUpdate));
                 }
