@@ -1,16 +1,16 @@
 # Mapper
 
-## ¿What is it?
+## What is it?
 
 _Mapper_ is a library that allow the __object-relational mapping__ from Relational Databases to Java objects.
 
-## ¿Why was it developed?
+## Why was it developed?
 
 This library was developed as part of an assigment in the subject __Databases II__ from the __Computer Engineering Degree__ in the __University of Santiago de Compostela__. Specifically, it consisted in the development of a social network which required the usage of SQL databases.
 
-## ¿How does it work?
+## How does it work?
 
-### ¿How to define the mapping of a Java class?
+### How to define the mapping of a Java class?
 The library provides the user with an interface which relies on the usage of the _annotations_ available in Java. These can be classified in two categories:
 
 1. __MapperTable:__ _class level_ annotation that points the library which is the database's __table__ from where the data will be mapped.
@@ -36,7 +36,7 @@ public class Student {
 }
 ```
 
-### ¿How to perform the mapping of Java class?
+### How to perform the mapping of Java class?
 
 To map an already defined Java class using __annotations__, the user will need to rely on the available _Mapper_ classes in the library. Within these, a parent class is divided into several subclasses, each one specializing in an specific kind of tasks:
 
