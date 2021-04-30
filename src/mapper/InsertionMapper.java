@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.regex.Matcher;
 
 
 /**
@@ -91,7 +90,7 @@ public class InsertionMapper<E> extends Mapper<E> {
     private void prepareQuery() {
         String nombreColumna;
         StringBuilder queryBuilder = new StringBuilder("INSERT INTO ")
-                .append(mappedClass.getAnnotation(MapperTable.class).nombre()).append("(");
+                .append(mappedClass.getAnnotation(MapperTable.class).name()).append("(");
 
         // Fetches all the fields to be mapped
         for (Field field : mappedClass.getDeclaredFields()) {
@@ -154,7 +153,7 @@ public class InsertionMapper<E> extends Mapper<E> {
                         }
                     }
                 }
-                this.customInsertion(insertion, mappedClass.getAnnotation(MapperTable.class).nombre());
+                this.customInsertion(insertion, mappedClass.getAnnotation(MapperTable.class).name());
             }
         } catch (IllegalAccessException ex) {
             throw new Exception(ex.getMessage());

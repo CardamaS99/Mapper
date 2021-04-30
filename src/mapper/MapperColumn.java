@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface MapperColumn {
-    String columna() default "";                    // Column name
+    String column() default "";                     // Column name
 
     boolean pkey() default false;                   // True if it's a primary key
 

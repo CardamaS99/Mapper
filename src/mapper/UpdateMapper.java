@@ -100,7 +100,7 @@ public class UpdateMapper<T> extends Mapper<T> {
         PreparedStatement statement;
         String columnName;
         StringBuilder updateBuilder = new StringBuilder("UPDATE ").append(mappedClass.getAnnotation(MapperTable.class)
-                .nombre()).append(" SET ");
+                .name()).append(" SET ");
 
         // Configures the connection to the database
         configureConnection();
@@ -148,7 +148,7 @@ public class UpdateMapper<T> extends Mapper<T> {
                 // Performs the actions on Mappeable fields which also happen to be Primary Keys
                 if (field.isAnnotationPresent(MapperColumn.class) && field.getAnnotation(MapperColumn.class).pkey()) {
                     // Colum name for the current Field. If it's not annotated, field name gets used
-                    columnName = field.getAnnotation(MapperColumn.class).columna();
+                    columnName = field.getAnnotation(MapperColumn.class).column();
                     columnName = columnName.equals("") ? field.getName() : columnName;
 
                     // Value check

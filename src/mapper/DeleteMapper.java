@@ -91,7 +91,7 @@ public class DeleteMapper<T> extends Mapper<T> {
 
         // SQL code base. Needed info gets extracted from the mapped class
         StringBuilder deleteBuilder = new StringBuilder("DELETE FROM ")
-                .append(mappedClass.getAnnotation(MapperTable.class).nombre()).append(" WHERE ");
+                .append(mappedClass.getAnnotation(MapperTable.class).name()).append(" WHERE ");
 
         // Loops over all the fields from the Mapped class
         for (Field field : mappedClass.getDeclaredFields()) {

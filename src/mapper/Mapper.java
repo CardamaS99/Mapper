@@ -144,7 +144,7 @@ public abstract class Mapper<T> {
         String nameColumn = null;
 
         if (field.isAnnotationPresent(MapperColumn.class)) {
-            nameColumn = field.getAnnotation(MapperColumn.class).columna();
+            nameColumn = field.getAnnotation(MapperColumn.class).column();
             nameColumn = nameColumn.equals("") ? field.getName() : nameColumn;
         }
 
@@ -172,8 +172,8 @@ public abstract class Mapper<T> {
         StringBuilder queryBuilder = new StringBuilder("SELECT * FROM ");
         // Query will end up looking somewhat like this
         // SELECT * FROM [TABLE] WHERE [PRIMARY_KEY]=pkObject;
-        queryBuilder.append(clase.getAnnotation(MapperTable.class).nombre().equals("") ?
-                clase.getName() : clase.getAnnotation(MapperTable.class).nombre()).append(" WHERE ");
+        queryBuilder.append(clase.getAnnotation(MapperTable.class).name().equals("") ?
+                clase.getName() : clase.getAnnotation(MapperTable.class).name()).append(" WHERE ");
         // .append(" ? WHERE "); ?¿¿?¿
 
         // Finds the field which is anotaded as Primary Key
@@ -183,8 +183,8 @@ public abstract class Mapper<T> {
                 .findAny().orElseThrow(RuntimeException::new);
 
         queryBuilder.append(
-                fkField.getAnnotation(MapperColumn.class).columna().equals("") ?
-                        fkField.getName() : fkField.getAnnotation(MapperColumn.class).columna()
+                fkField.getAnnotation(MapperColumn.class).column().equals("") ?
+                        fkField.getName() : fkField.getAnnotation(MapperColumn.class).column()
         ).append("=?");  // ? used to insert it on the where clause
 
         // Returns the mapped instance with
@@ -216,13 +216,13 @@ public abstract class Mapper<T> {
 
         // Base query
         StringBuilder queryBuilder = new StringBuilder("SELECT * FROM ");
-        queryBuilder.append(clase.getAnnotation(MapperTable.class).nombre().equals("") ?
-                clase.getName() : clase.getAnnotation(MapperTable.class).nombre()).append(" WHERE ");
+        queryBuilder.append(clase.getAnnotation(MapperTable.class).name().equals("") ?
+                clase.getName() : clase.getAnnotation(MapperTable.class).name()).append(" WHERE ");
 
         for (Field field : clase.getDeclaredFields()) {
             if (field.isAnnotationPresent(MapperColumn.class) && field.getAnnotation(MapperColumn.class).pkey()) {
-                tmpColumn = field.getAnnotation(MapperColumn.class).columna().equals("") ?
-                        field.getName() : field.getAnnotation(MapperColumn.class).columna();
+                tmpColumn = field.getAnnotation(MapperColumn.class).column().equals("") ?
+                        field.getName() : field.getAnnotation(MapperColumn.class).column();
                 queryBuilder.append(tmpColumn).append("=? and ");  // ? used to insert it on the where clause
                 params.add(pkeys.get(tmpColumn));
             }
@@ -279,18 +279,18 @@ public abstract class Mapper<T> {
                         // clase foránea.
                         //
                         // Se crea un HashMap para tener los nombres de los atributos que son claves foráneas
-                        // indexadas por el nombre de atributo al que está referenciando en la otra tabla
+                        // indexadas por el name de atributo al que está referenciando en la otra tabla
                         //
                         // Por ejemplo en sugarDaddy:id, la clave sería "id" y el valor "sugarDaddy"
                         HashMap<String, String> translateColumn = new HashMap<>();
 
                         // Se recorren todas las foreignKeys obtenidas anteriormente
                         for (String fk : foreignKeys) {
-                            // Se genera una tupla mediante el split(":") para separar el nombre del atributo en la
-                            // relación y el nombre en la relación referenciada
+                            // Se genera una tupla mediante el split(":") para separar el name del atributo en la
+                            // relación y el name en la relación referenciada
                             String[] tuple = fk.split(":");
 
-                            // Se añade la clave y el valor al HashMap para luego realizar la traducción en el nombre de
+                            // Se añade la clave y el valor al HashMap para luego realizar la traducción en el name de
                             // columnas
                             translateColumn.put(tuple[1], tuple[0]);
                         }
@@ -300,8 +300,8 @@ public abstract class Mapper<T> {
 
                         // Se recorren las claves primarias obtenidas
                         for (String column : atomicPks.keySet()) {
-                            // Se obtiene el nombre de la columna en la relación inicial a partir del nombre de
-                            // columna de la tabla referenciada y se añade la clave foránea
+                            // Se obtiene el name de la column en la relación inicial a partir del name de
+                            // column de la tabla referenciada y se añade la clave foránea
                             containFK.put(translateColumn.get(column), atomicPks.get(column));
                         }
                     }
@@ -329,8 +329,8 @@ public abstract class Mapper<T> {
         Map<String, Field> fields = getPK(object.getClass());
         try {
 
-            // Se recorren todas las fields que son clave primaria, donde su columna equivale al nombre
-            // de la columna en la base de datos. En caso de que haya más de una clave primaria se separan
+            // Se recorren todas las fields que son clave primaria, donde su column equivale al name
+            // de la column en la base de datos. En caso de que haya más de una clave primaria se separan
             // por ":"
             for (String columnName : fields.keySet()) {
 
@@ -350,7 +350,7 @@ public abstract class Mapper<T> {
                     // El número de claves que se han devuelto en getAtomicPK debería ser el mismo número de columnas
                     // que se generó en el anterior split
                     for (String columnExtern : pAux.keySet()) {
-                        // La función getAtomicPK devuelve las claves primarias indexadas por su columna en dicha
+                        // La función getAtomicPK devuelve las claves primarias indexadas por su column en dicha
                         // relación, por lo tanto hay que indexarlo en función de columnNames y no de columnExtern
                         pKeys.put(columnName, pAux.get(columnExtern));
                     }
@@ -407,7 +407,7 @@ public abstract class Mapper<T> {
 
                 // Column name extraction
                 // On empty / default column name specification uses the field name
-                columnName = field.getAnnotation(MapperColumn.class).columna();
+                columnName = field.getAnnotation(MapperColumn.class).column();
                 columnName = columnName.equals("") ? field.getName() : columnName;
 
                 // Add the field of the PK in the HashMap
