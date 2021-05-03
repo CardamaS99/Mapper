@@ -34,7 +34,7 @@ class QueryMapperTest {
 
     @ParameterizedTest(name = "[{index}]: Usuario {0}, contraseña {1}, nombre {2}, trabajo {3}")
     @CsvSource({"juanf,1234,JuanFernando,3"})
-    @DisplayName("Comprobar existencia de un usuario")
+    @DisplayName("Comprobar existencia de un usuario con el método findFirst")
     void findfirstTest(String usernameExpected, String passwordExpected, String nameExpected, int idExpected)
             throws Exception {
         /* ARRANGE */
@@ -43,7 +43,6 @@ class QueryMapperTest {
 
         /* ACT */
 
-        // Se calcula el tiempo
         User user = mapper.createQuery("SELECT * FROM Person WHERE username=?").defineParameters(usernameExpected)
                 .findFirst();
 
@@ -53,6 +52,28 @@ class QueryMapperTest {
         assertEquals(user.getPassword(), passwordExpected);
         assertEquals(user.getName(), nameExpected);
         assertEquals(user.getJob().getId(), idExpected);
+    }
+
+    @ParameterizedTest(name = "[{index}]: Usuario {0}, contraseña {1}, nombre {2}, trabajo {3}")
+    @CsvSource({"juanf,1234,JuanFernando,3,Profesor"})
+    @DisplayName("Comprobar existencia de un usuario con el método get")
+    void getTest(String usernameExpected, String passwordExpected, String nameExpected, int idExpected,
+                 String nameJobExpected) throws Exception {
+        /* ARRANGE */
+        QueryMapper<User> mapper = new QueryMapper<>(connection);
+        User user_pk = new User(usernameExpected);
+
+        mapper.defineClass(User.class);
+
+        /* ACT */
+        User user = mapper.get(user_pk);
+
+        /* ASSERT */
+        assertEquals(user.getUsername(), usernameExpected);
+        assertEquals(user.getPassword(), passwordExpected);
+        assertEquals(user.getName(), nameExpected);
+        assertEquals(user.getJob().getId(), idExpected);
+        assertEquals(user.getJob().getName(), nameJobExpected);
     }
 
 

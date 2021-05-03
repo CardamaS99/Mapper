@@ -18,6 +18,14 @@ public class User {
     @MapperColumn(fKeys = "idJob:id", targetClass = Job.class)
     private Job job;
 
+    public User() {
+
+    }
+
+    public User(String username) {
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }

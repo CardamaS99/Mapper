@@ -1,7 +1,6 @@
 package mapper;
 
 
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -45,6 +44,44 @@ public class QueryMapper<T> extends Mapper<T> {
             throw new Exception(ex.getMessage());
         }
         return this;
+    }
+
+    /**
+     * Get all information about the object.
+     *
+     * @param object object with the primary keys
+     * @return object with all information from the database.
+     * @throws Exception
+     */
+    public T get(T object) throws Exception {
+        StringBuilder builder = new StringBuilder("SELECT * FROM ");
+        List<Object> attributes = new ArrayList<>();
+
+        builder.append(mappedClass.getAnnotation(MapperTable.class).name()).append(" WHERE ");
+
+        for (Field field : mappedClass.getDeclaredFields()) {
+            field.setAccessible(true);
+            if (field.isAnnotationPresent(MapperColumn.class)) {
+                MapperColumn column = field.getAnnotation(MapperColumn.class);
+
+                if (column.pkey()) {
+                    builder.append(extractColumnName(field)).append("=? AND ");
+
+                    // Adds primary keys to the attributes list.
+                    attributes.add(field.get(object));
+                }
+            }
+        }
+
+        builder.delete(builder.length() - 5, builder.length());
+
+        System.out.println(builder.toString());
+        System.out.println(attributes);
+
+        createQuery(builder.toString());
+        defineParametersList(attributes);
+
+        return findFirst();
     }
 
     /**
@@ -95,7 +132,7 @@ public class QueryMapper<T> extends Mapper<T> {
                                     if (useForeignKeys) {
                                         // FKEYS
                                         if (field.getAnnotation(MapperColumn.class).fKeys().equals("")) {
-                                            if(columnas.contains(nombreColumna)) {
+                                            if (columnas.contains(nombreColumna)) {
                                                 field.set(elemento, getFK(foreignClass, set.getObject(nombreColumna)));
                                             }
                                         } else {
@@ -194,7 +231,7 @@ public class QueryMapper<T> extends Mapper<T> {
     @Override
     public QueryMapper<T> setIsolationLevel(int isolationLevel) throws Exception {
 
-        return((QueryMapper<T>)super.setIsolationLevel(isolationLevel));
+        return ((QueryMapper<T>) super.setIsolationLevel(isolationLevel));
     }
 
     /* Closing methods */
