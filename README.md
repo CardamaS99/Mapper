@@ -16,7 +16,7 @@ The library provides the user with an interface which relies on the usage of the
 1. __MapperTable:__ _class level_ annotation that points the library which is the database's __table__ from where the data will be mapped.
 2. __MapperColumn:__ _attribute level_ annotation that points the library which is the database's __column__ from where the data will be obtained.
 
-Via these annotations, the library is able to __parse basic SQL tables__ along with their properties, such as primary keys, or default values. Following up, an example shows a Java class _Alumno_ which maps the _Alumnos_ table.
+Via these annotations, the library is able to __parse basic SQL tables__ along with their properties, such as primary keys, or default values. Following up, an example shows a Java class _Student_ which maps the _Students_ table.
 
 ```
 @MapperTable(nombre="students")
@@ -31,8 +31,8 @@ public class Student {
     @MapperColumn
     private Date birthday;
     
-    @MapperColumn(fkey="teacher:id")
-    private Profesor teacher;
+    @MapperColumn(fkey="teacher:id", targetClass="Teacher.class")
+    private Teacher teacher;
 }
 ```
 
